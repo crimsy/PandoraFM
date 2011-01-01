@@ -1,0 +1,34 @@
+20071013 PandoraFM v3
+
+Keep in mind this has never been tested against any other environment.  And most things may need tweaking.
+
+
+To Configure:
+Run PandoraFMSchema.sql against a database somewhere.
+Edit inc/db.inc and edit the dbserver, dbuser, dbpass, dbname values to point to your MySQL database.
+Edit inc/template.txt and utils/inc to change the hostname & email address you want in the recommendation emails.
+Edit inc/errors.inc to point to your local errorlog.txt file.
+Edit inc/log.inc to point to your local log.txt file.
+Edit flickrsearch.php's url string to put in a different API key.
+
+Do a massive find/replace to replace pandorafm.real-ity.com with your host.
+
+CHANGELOG (not in any order)
+
+externalplayer.php:#20060722 GEK Creates m3u playlist for playing last stream in external player               
+flickrsearch.php:#20060809 GEK Uses flickr API to search for images                                            
+genome.php:    #20061101 GEK Pandora Music Genome scraping via backstage URL                                   
+inc/errors.inc:#20060621 GEK Created to intialize logging of errors to a file for debug purposes.              
+inc/cache.inc:#20060604 GEK Track caching and retrieval for when Last.FM submissions are down.                 
+inc/lastfm.inc:#20060531 GEK PandoraFM Last.FM API submission functions                                        
+javascript.php://20060730 GEK JavaScript functions for PandoraFM Pandora tuner window and control panel
+javascript.php://20060920 GEK Additional functions to support Pandora Events API v2
+lastradio.php:#20060626 GEK Functions to enable Last.FM track tagging in PandoraFM.
+lastradio.php:#20060704 GEK Edited function to allow streaming radio functionality from last.
+lastxmlrpc.php:#20060721 GEK xmlrpc client interface to actions on Last.FM
+lastxmlrpc.php:#20060930 GEK add tagging functions
+parseini.php:#20060704 GEK Parse and display Last.FMs streaming radio status
+playerfunctions.php:#20060708 GEK JavaScript Functions called in the PandoraFM Last.FM radio player.
+savesetting.php:#20060924 GEK The way cookies were saved before sucks.  Rewriting it here.
+socialtab.php:# 20060702 GEK Statistics and links for social networking purposes.
+tag.php:#20060626 GEK Functions to enable Last.FM track tagging in PandoraFM.

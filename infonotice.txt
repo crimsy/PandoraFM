@@ -1,0 +1,2 @@
+<img height=11 width=15 src=images/lightbulb.gif>
+What do you think? <a class="underline" target="_blank" href="http://www.last.fm/group/PandoraFM%2BUsers/forum/33812">Discuss on the forums</a> or <a class="underline" href="http://www.the-cabin.com/chat/chat.php" target="_blank">chat in realtime!</a>

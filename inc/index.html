@@ -1,0 +1,300 @@
+
+
+<html><head><title>Popup Caption</title>
+
+<style type="text/css">
+<!--
+
+A:hover { color:#CC0000; }
+
+//-->
+</style>
+
+<script language="JavaScript" src="dynlib.js"></script> 
+<script language="JavaScript" src="popupcaption.js"></script> 
+
+<script language="JavaScript">
+<!--
+
+//-->
+</script>
+
+</head>
+
+<body
+bgcolor="#FFFFFF" text="#000000"
+link="#000099" vlink="#000099" alink="#CC0000">
+
+<form>
+
+<table cellpadding="0" cellspacing="0" border="0" width="750">
+<tr>
+<td>
+
+<p>
+<font face="verdana,arial" size="4">
+<b>Popup Caption</b>
+</font>
+</p>
+
+<p>
+<font face="verdana,arial" size="2">
+v1.0 - May 21, 2006<br>
+<a href="popupcaption.zip">popupcaption.zip</a> (9k)
+</font>
+</p>
+
+<hr size="1" noshade>
+
+<p>
+<font face="verdana,arial" size="2">
+Popup Caption is a Dynamic HTML script that opens an caption styled information box when the mouse runs over a hyperlink.
+</font>
+</p>
+
+<p>
+<font face="verdana,arial" size="2">
+* This script requires the Dynamic HTML scripting library <a href="dynlib.js">dynLib</a>.
+For more information about dynLib please visit the <a href="http://lloydhassell.com/dynlib">dynLib website</a>.
+</font>
+</p>
+
+<p>
+<font face="verdana,arial" size="2">
+<b>Demonstration</b>
+</font>
+</p>
+
+<ul>
+<font face="verdana,arial" size="2">
+<li><a href="#" onMouseOver="javascript:showPopupCaption('<b>Popup Caption</b> by Lloyd Hassell');" onMouseOut="javascript:hidePopupCaption();">Popup Caption</a></li>
+</font>
+</ul>
+
+<p>
+<font face="verdana,arial" size="2">
+<b>Installation</b>
+</font>
+</p>
+
+<p>
+<font face="verdana,arial" size="2">
+1. Upload the files 'dynlib.js' & 'popupcaption.js' to your website
+then link them to your document as JavaScript include files.
+Add the following code between the &lt;head&gt; & &lt;/head&gt; tags:
+</font>
+</p>
+
+<table cellpadding="2" cellspacing="0" border="0" width="100%">
+<tr>
+<td bgcolor="#DDDDDD">
+<font color="#666666" face="courier new,verdana,arial" size="2">
+<font color="#000000">&lt;script language="JavaScript" src="dynlib.js"&gt;&lt;/script&gt;</font><br>
+<font color="#000000">&lt;script language="JavaScript" src="popupcaption.js"&gt;&lt;/script&gt;</font>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+<font face="verdana,arial" size="2">
+2. Call the 'showPopupCaption()' function using a hyperlink with the 'onmouseover' event handler
+and the 'hidePopupCaption()' function using the 'onmouseout' event handler.
+Add the following code to an &lt;a&gt; tag:
+</font>
+</p>
+
+<table cellpadding="2" cellspacing="0" border="0" width="100%">
+<tr>
+<td bgcolor="#DDDDDD">
+<font color="#666666" face="courier new,verdana,arial" size="2">
+&lt;a href="myfile.html"<br>
+<font color="#000000">onmouseover="javascript:showPopupCaption('My Message');"<br>
+onmouseout="javascript:hidePopupCaption();"<font color="#666666">&gt;My Text&lt;/a&gt;<br>
+</td>
+</tr>
+</table>
+
+<p>
+<font face="verdana,arial" size="2">
+<b>Source Code</b>
+</font>
+</p>
+
+
+
+<p>
+<font face="verdana,arial" size="2">
+&nbsp;&nbsp;<a href="popupcaption.js">popupcaption.js</a> (6k)
+</font>
+</p>
+
+<p align="center">
+<textarea rows="25" cols="88" wrap="off">// =============================== //
+// Popup Caption                   //
+// v1.0 - May 21, 2006             //
+// ------------------------------- //
+// Written by Lloyd Hassell        //
+// Website: lloydhassell.com       //
+// Email: lloydhassell@hotmail.com //
+// =============================== //
+
+// INITIALIZATION:
+
+popupCaption = new Object();
+
+// CONFIGURATION:
+
+popupCaption.bgColor = '#FFFFFF';
+popupCaption.fontColor = '#000000';
+popupCaption.fontFace = 'verdana,arial';
+popupCaption.fontSize = 2;
+popupCaption.width = 250;
+popupCaption.cursorOffsetX = 25;
+popupCaption.cursorOffsetY = -9;
+popupCaption.windowPadding = 2;
+popupCaption.openDelay = 350;
+popupCaption.imagesPath = '';
+
+// MAIN:
+
+popupCaption.documentLoaded = false;
+popupCaption.layerLoaded = false;
+popupCaption.layerActive = false;
+popupCaption.imageObj = new Array();
+popupCaption.openTimeout = null;
+popupCaption.updateTimeout = null;
+
+if (dyn) {
+   for (var imageLoop = 0; imageLoop < 18; imageLoop++) popupCaption.imageObj[imageLoop] = loadImg(popupCaption.imagesPath + 'pc' + (imageLoop + 1) + '.gif');
+   }
+
+function documentLoaded() {
+   popupCaption.documentLoaded = true;
+   }
+
+function loadPopupCaption() {
+   if (!popupCaption.layerLoaded) {
+      captureCursor();
+      popupCaption.layerObj = addLayer('popupCaptionLayer');
+      setLayerOnTop(popupCaption.layerObj);
+      popupCaption.layerLoaded = true;
+      }
+   }
+
+function showPopupCaption(MESSAGE) {
+   if (dyn && popupCaption.documentLoaded) {
+      if (!popupCaption.layerLoaded) loadPopupCaption();
+      if (popupCaption.layerActive) hideLayer(popupCaption.layerObj);
+      var htmlStr = getTableTag(0,0,0,popupCaption.width) + '<tr>' + getTdTag('left','top');
+      htmlStr += getTableTag(0,0,0,'100%') + '<tr>';
+      htmlStr += getTdTag('left','top',18) + getImgTag('',popupCaption.imagesPath + 'pc1.gif',18,9) + '</td>';
+      htmlStr += getTdTag('left','top','','',popupCaption.imagesPath + 'pc2.gif') + '</td>';
+      htmlStr += getTdTag('left','top') + getImgTag('',popupCaption.imagesPath + 'pc3.gif',9,9) + '</td>';
+      htmlStr += '</tr><tr>';
+      htmlStr += getTdTag('left','top','','',popupCaption.imagesPath + 'pc4.gif') + getImgTag('',popupCaption.imagesPath + 'pc5.gif',18,9) + '</td>';
+      htmlStr += getTdTag('left','top','','#FFFFFF') + getFontTag(popupCaption.fontColor,popupCaption.fontFace,popupCaption.fontSize) + MESSAGE + '</font></td>';
+      htmlStr += getTdTag('left','top','','',popupCaption.imagesPath + 'pc6.gif') + '</td>';
+      htmlStr += '</tr><tr>';
+      htmlStr += getTdTag('left','top') + getImgTag('',popupCaption.imagesPath + 'pc7.gif',18,9) + '</td>';
+      htmlStr += getTdTag('left','top','','',popupCaption.imagesPath + 'pc8.gif') + '</td>';
+      htmlStr += getTdTag('left','top') + getImgTag('',popupCaption.imagesPath + 'pc9.gif',9,9) + '</td>';
+      htmlStr += '</tr></table>';
+      htmlStr += '</td></tr></table>';
+      popupCaption.htmlStr1 = htmlStr;
+      var htmlStr = getTableTag(0,0,0,popupCaption.width) + '<tr>' + getTdTag('left','top');
+      htmlStr += getTableTag(0,0,0,'100%') + '<tr>';
+      htmlStr += getTdTag('left','top',9) + getImgTag('',popupCaption.imagesPath + 'pc10.gif',9,9) + '</td>';
+      htmlStr += getTdTag('left','top','','',popupCaption.imagesPath + 'pc11.gif') + '</td>';
+      htmlStr += getTdTag('left','top') + getImgTag('',popupCaption.imagesPath + 'pc12.gif',18,9) + '</td>';
+      htmlStr += '</tr><tr>';
+      htmlStr += getTdTag('left','top','9','',popupCaption.imagesPath + 'pc13.gif') + '</td>';
+      htmlStr += getTdTag('left','top','','#FFFFFF') + getFontTag(popupCaption.fontColor,popupCaption.fontFace,popupCaption.fontSize) + MESSAGE + '</font></td>';
+      htmlStr += getTdTag('left','top','','',popupCaption.imagesPath + 'pc14.gif') + getImgTag('',popupCaption.imagesPath + 'pc15.gif',18,9) + '</td>';
+      htmlStr += '</tr><tr>';
+      htmlStr += getTdTag('left','top',9) + getImgTag('',popupCaption.imagesPath + 'pc16.gif',9,9) + '</td>';
+      htmlStr += getTdTag('left','top','','',popupCaption.imagesPath + 'pc17.gif') + '</td>';
+      htmlStr += getTdTag('left','top') + getImgTag('',popupCaption.imagesPath + 'pc18.gif',18,9) + '</td>';
+      htmlStr += '</tr></table>';
+      htmlStr += '</td></tr></table>';
+      popupCaption.htmlStr2 = htmlStr;
+      popupCaption.openTimeout = window.setTimeout('displayPopupCaption();',popupCaption.openDelay);
+      }
+   }
+
+function hidePopupCaption() {
+   if (dyn && popupCaption.layerLoaded) {
+      popupCaption.layerActive = false;
+      hideLayer(popupCaption.layerObj);
+      window.clearTimeout(popupCaption.openTimeout);
+      window.clearTimeout(popupCaption.updateTimeout);
+      }
+   }
+
+function displayPopupCaption() {
+   popupCaption.layerActive = true;
+   popupCaption.htmlLayout = -1;
+   popupCaption.winWidth = getWinWidth();
+   popupCaption.winHeight = getWinHeight();
+   updatePopupCaption();
+   }
+
+function updatePopupCaption() {
+   if (popupCaption.layerActive) {
+      var posX = cursorWinX + popupCaption.cursorOffsetX;
+      var htmlLayout = (posX  + popupCaption.width < popupCaption.winWidth - popupCaption.windowPadding) ? 1 : 2;
+      if (popupCaption.htmlLayout != htmlLayout) {
+         hideLayer(popupCaption.layerObj);
+         if (htmlLayout == 1) setLayerHTML(popupCaption.layerObj,popupCaption.htmlStr1);
+         else setLayerHTML(popupCaption.layerObj,popupCaption.htmlStr2);
+         popupCaption.htmlLayout = htmlLayout;
+         showLayer(popupCaption.layerObj);
+         }
+      if (htmlLayout == 2) posX = posX - popupCaption.cursorOffsetX - popupCaption.width - 10;
+      posX += getDocScrollLeft();
+      var posY = cursorWinY + popupCaption.cursorOffsetY + getDocScrollTop();
+      moveLayerTo(popupCaption.layerObj,posX,posY);
+      popupCaption.updateTimeout = window.setTimeout('updatePopupCaption();',50);
+      }
+   }
+
+window.onload = documentLoaded;</textarea>
+</p>
+
+
+
+<p>
+<font face="verdana,arial" size="2">
+<b>Notes</b>
+</font>
+</p>
+
+<ul>
+<font face="verdana,arial" size="2">
+<li>If you want to change the background color of the caption,
+you need to change the colors of each image used to create the caption (pc1.gif, pc2.gif, pc3.gif, etc. 18 in total)
+and also change the 'popupCaption.bgColor' property.</li>
+</font>
+</ul>
+
+<hr size="1" noshade>
+
+
+
+<p>
+<font face="verdana,arial" size="2">
+<i>Popup Caption</i> by Lloyd Hassell<br><br>
+&nbsp;Website: <a href="http://lloydhassell.com">lloydhassell.com</a><br>
+&nbsp;Email: <a href="mailto:lloydhassell@hotmail.com">lloydhassell@hotmail.com</a>&nbsp;&nbsp;&nbsp;<font color="#FFFFFF">000001
+</font>
+</p>
+
+
+
+</td>
+</tr>
+</table>
+
+</form>
+
+</body></html>

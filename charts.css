@@ -1,0 +1,71 @@
+.titletext {
+	font-size:10px
+}
+
+.leftendline1 {
+	background-image: url(/images/left-end1.gif);
+	background-repeat: no-repeat;
+	border-bottom-width: medium;
+	border-bottom-style: solid;
+	border-bottom-color: #FFFFFF;
+	font-size: 9px;
+}
+
+.line1 {
+	background-color: #D8D8D8;
+	text-align: center;
+	border-bottom-width: medium;
+	border-bottom-style: solid;
+	border-bottom-color: #FFFFFF;
+	font-size: 14px;
+	color: #000000;
+	text-decoration: none;
+	border-right-style: solid;
+	vertical-align: top;
+	border-right-width: medium;
+	border-right-color: #FFFFFF;
+	border-left-width: thin;
+	border-left-style: solid;
+	border-left-color: #FFFFFF;
+}
+.newfont {
+	font-size: 14px;
+}
+.underline {
+	font-size: 16px;
+	text-decoration: underline;
+}
+
+.line2 {
+	background-color: #C2C2C2;
+	text-align: center;
+	border-bottom-width: medium;
+	border-bottom-style: solid;
+	border-bottom-color: #FFFFFF;
+	font-size: 14px;
+	color: #000000;
+	text-decoration: none;
+	border-right-style: solid;
+	vertical-align: top;
+	border-right-width: medium;
+	border-right-color: #FFFFFF;
+	border-left-width: thin;
+	border-left-style: solid;
+	border-left-color: #FFFFFF;
+}
+
+a {
+	color: #000000;
+	text-decoration: none;
+	font-size: 14px;
+}
+																				
+.line1end {
+	background-color: #FFFFFF;
+	border-bottom-width: medium;
+	border-bottom-style: solid;
+	border-bottom-color: #FFFFFF;
+	border-right-style: solid;
+	border-right-width: medium;
+	border-right-color: #FFFFFF;
+}
